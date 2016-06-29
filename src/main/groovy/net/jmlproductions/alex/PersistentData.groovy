@@ -16,6 +16,6 @@ class PersistentData
     }
 
     def ensurePathExists(path) {
-        new File(path).mkdirs()
+        new File(path).createNewFile()
     }
 }

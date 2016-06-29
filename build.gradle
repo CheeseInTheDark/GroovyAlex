@@ -37,4 +37,4 @@ jar
     }
 }
 
-mainClassName = "net.jmlproductions.groovyplants.Plants"
+mainClassName = "net.jmlproductions.alex.AlexStart"
