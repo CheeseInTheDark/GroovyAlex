@@ -13,6 +13,6 @@ class AlexFactory
         router.addRoute("name-prompt", { new NamePrompt(user, persistentData, router) } )
         router.addRoute("start", { new StartPage(user) })
 
-        new Alex(router: router, user: user)
+        new Alex(router: router, user: user, persistentData: persistentData)
     }
 }

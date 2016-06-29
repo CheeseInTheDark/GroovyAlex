@@ -6,10 +6,9 @@ import javax.swing.JFrame
 
 class StartPage
 {
-    def user
 
     static class Controller {
-
+        def user
     }
 
     def StartPage(user) {

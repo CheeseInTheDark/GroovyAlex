@@ -7,12 +7,4 @@ class User
     def hasName() {
         false
     }
-
-    def setName(name) {
-        this.name = name
-    }
-
-    def getName() {
-        name
-    }
 }

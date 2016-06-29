@@ -12,35 +12,53 @@ class AlexTest
 
     def goCalled
     def goDestination
-    def destinationArguments
     def fakeRouter
-    def fakeUser
+    def fakePersistentData
+
+    def fakeUser = new User(name: "not set")
+
+    def savedUser = new User(name: "doofus")
 
     @Before
     def void setup() {
-        goCalled = false;
-        fakeRouter = [go: { destination, arguments=null ->
+        goCalled = false
+        fakeRouter = [go: { destination ->
             goCalled = true
             goDestination = destination
-            destinationArguments = arguments
         }]
-        fakeUser = [hasName: { false }]
-        subject = new Alex(router: fakeRouter, user: fakeUser)
+        fakePersistentData = [
+            savedUserExists: { false },
+            getSavedUser: {}
+        ]
+        subject = new Alex(router: fakeRouter, user: fakeUser, persistentData: fakePersistentData)
     }
 
     @Test
     def void opensNamePromptIfNoNameIsAvailable() {
         subject.start()
+
         assert goCalled
         assert goDestination == "name-prompt"
     }
 
+    def void savedUserExists() {
+        fakePersistentData.savedUserExists = { true }
+        fakePersistentData.getSavedUser = { savedUser }
+    }
+
+    @Test
+    def void loadsTheUserIfAvailable() {
+        savedUserExists()
+        subject.start()
+
+        assert fakeUser.name == "doofus"
+    }
+
     @Test
     def void opensStartPageIfNameIsAvailable() {
-        fakeUser.hasName = { true }
+        savedUserExists()
         subject.start()
 
         assert goDestination == "start"
-        assert destinationArguments == fakeUser
     }
 }
