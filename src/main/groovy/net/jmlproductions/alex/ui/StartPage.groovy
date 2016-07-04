@@ -6,12 +6,20 @@ import javax.swing.JFrame
 
 class StartPage
 {
-
     static class Controller {
         def user
+        def conversationStarter
+
+        def addressElement
+
+        def connectClicked = {
+            conversationStarter.talkTo(addressElement.text)
+        }
     }
 
     def StartPage(user) {
+        def controller = new Controller(user: user, conversationStarter: conversationStarter)
+
         new SwingBuilder().edt {
             frame(pack: true, show: true, defaultCloseOperation: JFrame.EXIT_ON_CLOSE, resizable: false) {
                 panel(border: emptyBorder(5)) {
@@ -31,7 +39,7 @@ class StartPage
                         }
                         tr {
                             td(align: "center", colspan: 2) {
-                                button(id: "connect", text: "Connect")
+                                button(id: "connect", text: "Connect", actionPerformed: controller.connectClicked)
                             }
                         }
                     }
